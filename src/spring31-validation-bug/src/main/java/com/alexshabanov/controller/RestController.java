@@ -33,7 +33,7 @@ public final class RestController {
 
     @RequestMapping(value = "/hello", method = RequestMethod.POST)
     @ResponseBody
-    public Hello login(@Valid @RequestBody Hello hello) {
+    public Hello postHello(@Valid @RequestBody Hello hello) {
 
         // uncomment to see validation failure
         //checkValid(hello);
