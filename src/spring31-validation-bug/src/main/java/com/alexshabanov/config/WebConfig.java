@@ -3,7 +3,6 @@ package com.alexshabanov.config;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
@@ -21,12 +20,6 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
-//@ComponentScan(
-//        basePackages="com.alexshabanov.controller",
-//        useDefaultFilters = false,
-//        includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Controller.class)
-//)
-@ComponentScan(basePackages = "com.alexshabanov")
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private RequestMappingHandlerMapping requestHandlerMapping;

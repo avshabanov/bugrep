@@ -13,26 +13,10 @@ import java.util.Date;
 @Controller
 @RequestMapping(value = "/rest", headers = "content-type=application/json")
 public class RestController {
-//    private final Logger log = LoggerFactory.getLogger(RestController.class);
-
-//    @Autowired
-//    private Validator validator;
-//
-//    private void checkValid(Object restObject) {
-//        final Set<?> validationResult = validator.validate(restObject);
-//        if (!validationResult.isEmpty()) {
-//            log.warn("Malformed REST object: {}, validation result: {}", restObject, validationResult);
-//            throw new IllegalArgumentException("Error: " + validationResult);
-//        }
-//    }
 
     @RequestMapping(value = "/hello", method = RequestMethod.POST)
     @ResponseBody
     public Hello postHello(@Valid @RequestBody Hello hello) {
-
-        // uncomment to see validation failure
-        //checkValid(hello);
-
         final Hello result = new Hello();
         result.setOrigin("Server + " + hello.getOrigin());
         result.setGreeting("Hello from Server + " + hello.getGreeting());
