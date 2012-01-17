@@ -10,7 +10,7 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
@@ -19,8 +19,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Configuration
-@EnableWebMvc
-public class WebConfig extends WebMvcConfigurerAdapter {
+public class WebConfig extends WebMvcConfigurationSupport {
     @Autowired
     private RequestMappingHandlerMapping requestHandlerMapping;
 
@@ -33,20 +32,28 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         final MappingJacksonHttpMessageConverter jacksonConverter = new MappingJacksonHttpMessageConverter();
         jacksonConverter.getObjectMapper().setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-		converters.add(jacksonConverter);
-	}
+        converters.add(jacksonConverter);
+    }
 
     @Override
     public Validator getValidator() {
-		return new LocalValidatorFactoryBean();
-	}
+        return new LocalValidatorFactoryBean();
+    }
 
-	@Bean
-	public ViewResolver viewResolver() {
-		UrlBasedViewResolver viewResolver = new UrlBasedViewResolver();
-		viewResolver.setViewClass(JstlView.class);
+    @Bean
+    public ViewResolver viewResolver() {
+        UrlBasedViewResolver viewResolver = new UrlBasedViewResolver();
+        viewResolver.setViewClass(JstlView.class);
         viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");
-		return viewResolver;
-	}
+        return viewResolver;
+    }
+
+
+    @Bean
+    public RequestMappingHandlerMapping requestMappingHandlerMapping() {
+        RequestMappingHandlerMapping handlerMapping = super.requestMappingHandlerMapping();
+        handlerMapping.setAlwaysUseFullPath(true);
+        return handlerMapping;
+    }
 }
